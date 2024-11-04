@@ -6,6 +6,35 @@ function StartBtnMenu({ setStartMenu }) {
   const [selectBtn, setSelelctBtn] = useState("start-game")
   const [animation, setAnimation] = useState(false)
 
+  const onKey = (event) => {
+    if (event.code === "Enter") {
+      if (selectBtn === "start-game") {
+        setAnimation(true)
+      } else if (selectBtn === "github") {
+        window.open(
+          "https://github.com/AkioKane/memory-card", "_blank"
+        )
+      }
+    } else if (
+      event.code === "ArrowDown" || 
+      event.code === "ArrowUp"
+    ) {
+      if (selectBtn === "start-game") {
+        return setSelelctBtn("github");
+      } else if (selectBtn === "github") {
+        return setSelelctBtn("start-game")
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", onKey)
+
+    return () => {
+      document.removeEventListener("keydown", onKey)
+    }
+  })
+
   const btnsSelection = () => {
     return (
       <>

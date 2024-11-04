@@ -31,4 +31,5 @@
 
 body {
   font-family: "Bona";
+  -webkit-font-smoothing: antialiased;
 }
