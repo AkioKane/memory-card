@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import AnimationMenu from "./AnimationMenu";
 import "../styles/StartBtnMenu.css";
 
-function StartBtnMenu({ setStartMenu }) {
+function StartBtnMenu({ setStartMenu, animation, setAnimation }) {
   const [selectBtn, setSelelctBtn] = useState("start-game")
-  const [animation, setAnimation] = useState(false)
 
   const onKey = (event) => {
     if (event.code === "Enter") {
@@ -45,6 +44,7 @@ function StartBtnMenu({ setStartMenu }) {
             className="start-btn"
             onClick={(e) => {
               setAnimation(true)
+              setStartMenu(false)
             }}
             onMouseOver={(e) => {
               setSelelctBtn("start-game")
@@ -73,8 +73,13 @@ function StartBtnMenu({ setStartMenu }) {
 
   return (
     <div className="start-menu-btn">
-      <div className="opacity-flow"></div>
-      { animation ? <AnimationMenu setStartMenu={setStartMenu} /> : btnsSelection()}
+      <div 
+        className="opacity-flow"
+        style={{
+          opacity: animation ? "0" : "0.5"
+        }}
+      ></div>
+      { btnsSelection() }
     </div>
   );
 }

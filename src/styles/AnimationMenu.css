@@ -1,3 +1,14 @@
+.animation {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f172a;
+  width: 100vw;
+  height: 100vh;
+  animation: load 1s ease-in-out, unload 1s ease-in-out 2s;
+}
+
 .sharingan {
   background: #e41414;
   width: 8em;
@@ -96,3 +107,12 @@
   }
 }
 
+@keyframes load {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes unload {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
