@@ -9,6 +9,7 @@ function StartBtnMenu({ setStartMenu, animation, setAnimation }) {
     if (event.code === "Enter") {
       if (selectBtn === "start-game") {
         setAnimation(true)
+        setStartMenu(false)
       } else if (selectBtn === "github") {
         window.open(
           "https://github.com/AkioKane/memory-card", "_blank"
