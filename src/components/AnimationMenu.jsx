@@ -3,9 +3,18 @@ import "../styles/AnimationMenu.css";
 
 function AnimationMenu({ setAnimation }) {
   useEffect(() => {
-    setTimeout(() => {
-      setAnimation(false)
-    }, 3000)
+    let isMounted = true;
+    
+    const timer = setTimeout(() => {
+      if (isMounted) {
+        setAnimation(false)
+      }
+    }, 3000);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    }
   },[])
 
   return (
