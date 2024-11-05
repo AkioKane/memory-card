@@ -16,7 +16,7 @@ function Card({ dataCharacters, setDataCharacters }) {
   const [dataCard, setDataCard] = useState(null);
 
   useEffect(() => {
-    async function connectData() {
+    async function connectCharacter() {
       const response = await fetch(`https://narutodb.xyz/api/character/${randomID(1431)}`);
       const data = await response.json();
       
@@ -25,7 +25,7 @@ function Card({ dataCharacters, setDataCharacters }) {
     }
     
     return () => {
-      connectData()
+      connectCharacter()
     }
   }, [setDataCharacters])
 
@@ -37,7 +37,7 @@ function Card({ dataCharacters, setDataCharacters }) {
           // code...
         }}
       >
-
+        
       </div>
     </>
   )

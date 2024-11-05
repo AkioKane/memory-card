@@ -3,11 +3,9 @@ import "../styles/AnimationMenu.css";
 
 function AnimationMenu({ setAnimation }) {
   useEffect(() => {
-    return () => {
-      setTimeout(() => {
-        setAnimation(false)
-      }, 3000)
-    }
+    setTimeout(() => {
+      setAnimation(false)
+    }, 3000)
   },[])
 
   return (
