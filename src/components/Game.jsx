@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Card from "./Card";
+import naruto from "../assets/uzumaki.png";
+import sasuke from "../assets/uchiha.png";
 import "../styles/Game.css";
 
 function shuffleCards(array) {
@@ -16,6 +18,7 @@ function Game() {
   const [dataCharacters, setDataCharacters] = useState([])
   const [callDown, setCallDown] = useState(false)
   const [randCharacter, setRandCharacter] = useState(false)
+  const [score, setScore] = useState(0)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,8 +32,9 @@ function Game() {
 
   useEffect(() => {
     if (randCharacter) {
-      setRandCharacter(shuffleCards(dataCharacters))
+      setDataCharacters(shuffleCards(dataCharacters))
       setRandCharacter(false)
+      console.log(dataCharacters[0])
     }
   }, [randCharacter])
 
@@ -39,6 +43,19 @@ function Game() {
       <div className="game" style={{
         display: callDown ? "flex" : "none"
       }}>
+        <div className="stats">
+          <h1>
+            <img src={sasuke} alt="ninja1" />
+            Memory Card
+            <img src={naruto} alt="ninja2" />
+          </h1>
+          <div className="score-stats">
+            <h2>Score</h2>
+            <h2>High Score</h2>
+          </div>
+
+        </div>
+
         <div className="card-container">
           <Card 
             key={0}

@@ -32,3 +32,9 @@
   color: #e5e7eb;
   height: 50px;
 }
+
+@keyframes opacityLoad {
+  0% {opacity: 1;}
+
+  100% {opacity: 2;}
+}

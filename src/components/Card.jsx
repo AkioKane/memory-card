@@ -15,65 +15,70 @@ function randomID(maxValue) {
 function Card({ dataCharacters, setDataCharacters, setRandCharacter, character=null }) {
   const [dataCard, setDataCard] = useState(null);
 
-  useEffect(() => {
-    async function connectCharacter() {
-      if (dataCharacters.length >= 12) return;
-
-      const response = await fetch(`https://narutodb.xyz/api/character/${randomID(1431)}`);
-      const data = await response.json();
-
-      data.clicked = false;
-
-      if (data.images.length === 0) {
-        return connectCharacter()
-      }
-
-      try {
-        const image = await fetch(data.images[0])
-
-        if (!image.ok) {
-          return connectCharacter()
-        }
-      } catch (error) {
-        console.error(error.message);
-      }
-      
-      setDataCharacters((prevData) => {
-        if (prevData.length < 12) {
-          return [...prevData, data];
-        }
-        return prevData;
-      });
-      setDataCard(data);
+  async function connectCharacter() {
+    if (dataCharacters.length >= 12) return;
+  
+    const response = await fetch(`https://narutodb.xyz/api/character/${randomID(1431)}`);
+    const data = await response.json();
+  
+    data.clicked = false;
+  
+    if (data.images.length === 0) {
+      return connectCharacter();
     }
+  
+    try {
+      const image = await fetch(data.images[0])
+  
+      if (!image.ok) {
+        return connectCharacter();
+      }
+    } catch (error) {
+      console.error(error.message);
+      return connectCharacter();
+    }
+    
+    character ? setDataCard(character) : setDataCard(data);
+    setDataCharacters((prevData) => [...prevData, data]);
 
+    return data;
+  }
+
+  const connect = () => {
     if (character !== null) {
       setDataCard(character)
     } else {
       connectCharacter()
     }
+  }
 
-    return () => {};
-  }, [setDataCharacters, character])
-  
+  useState(() => {
+    connect()
+
+    return () => {
+      console.log('Очистка эффекта');
+    };
+  }, [setDataCharacters, character, dataCharacters])
+
   return (
     <>
       <div 
         className="card"
         onClick={(e) => {
           setRandCharacter(true)
+          setDataCard(character)
           if (dataCard.clicked === true) {
             return console.log("Lose")
           }
           dataCard.clicked = true;
         }}
       >
-        <img 
-          src={dataCard ? dataCard.images[0] : ""} 
-          alt=""
+        <img
+          src={character ? character.images[0] : ""}
+          alt={character ? character.name : "Loading..."}
           draggable="false"
         />
-        <h3>{dataCard ? dataCard.name : ""}</h3>
+        <h3>{character ? character.name : "Loading..."}</h3>
       </div>
     </>
   )
