@@ -18,12 +18,14 @@ function Game() {
   const [dataCharacters, setDataCharacters] = useState([])
   const [callDown, setCallDown] = useState(false)
   const [randCharacter, setRandCharacter] = useState(false)
+  const [clicked, setClicked] = useState(false)
   const [score, setScore] = useState(0)
+  const [highScore, setHighScore] = useState(0)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setCallDown(true)
-    }, 1000)
+    }, 500)
 
     return () => {
       clearTimeout(timer)
@@ -31,12 +33,56 @@ function Game() {
   })
 
   useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score)
+    }
+
+    if (score === 24) {
+      // component Win!
+      console.log("Win!")
+    }
+  }, [score])
+
+  useEffect(() => {
     if (randCharacter) {
-      setDataCharacters(shuffleCards(dataCharacters))
+      setDataCharacters(getBalancedItems())
       setRandCharacter(false)
-      console.log(dataCharacters[0])
     }
   }, [randCharacter])
+
+  const getBalancedItems = () => {
+    const clickedItems = dataCharacters.filter(item => item.clicked);
+    const unclickedItems = dataCharacters.filter(item => !item.clicked);
+
+    const numClickedInFirstHalf = Math.floor(12 / 2);
+    const numUnclickedInFirstHalf = 12 - numClickedInFirstHalf;
+  
+    const selectedClickedItems = shuffleCards(clickedItems).slice(0, numClickedInFirstHalf);
+    const selectedUnclickedItems = shuffleCards(unclickedItems).slice(0, numUnclickedInFirstHalf);
+  
+    const firstHalf = shuffleCards([...selectedClickedItems, ...selectedUnclickedItems]);
+    const remainingItems = [...clickedItems.slice(numClickedInFirstHalf), ...unclickedItems.slice(numUnclickedInFirstHalf)];
+    const selectedItems = [...firstHalf, ...remainingItems];
+
+    return selectedItems;
+  };
+
+  const cards = () => {
+    const card = Array.from({ length: 12 }, (_, index) => (
+      <Card 
+        key={index}
+        dataCharacters={dataCharacters}
+        setRandCharacter={setRandCharacter}
+        character={dataCharacters[index]}
+        setClicked={setClicked}
+        score={score}
+        setScore={setScore}
+        setDataCharacters={setDataCharacters}
+      />
+    ))
+
+    return <>{card}</>
+  }
 
   return (
     <>
@@ -50,97 +96,20 @@ function Game() {
             <img src={naruto} alt="ninja2" />
           </h1>
           <div className="score-stats">
-            <h2>Score</h2>
-            <h2>High Score</h2>
+            <h2>Score {score}</h2>
+            <h2>High Score {highScore}</h2>
           </div>
 
         </div>
 
-        <div className="card-container">
-          <Card 
-            key={0}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[0]}
-          />
-          <Card 
-            key={1}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[1]}
-          />
-          <Card 
-            key={2}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[2]}
-          />
-          <Card 
-            key={3}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[3]}
-          />
-          <Card 
-            key={4}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[4]}
-          />
-          <Card 
-            key={5}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[5]}
-          />
-          <Card 
-            key={6}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[6]}
-          />
-          <Card
-            key={7} 
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[7]}
-          />
-          <Card 
-            key={8}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[8]}
-          />
-          <Card 
-            key={9}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[9]}
-          />
-          <Card 
-            key={10}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[10]}
-          />
-          <Card 
-            key={11}
-            dataCharacters={dataCharacters}
-            setDataCharacters={setDataCharacters}
-            setRandCharacter={setRandCharacter}
-            character={dataCharacters[11]}
-          />
+        <div 
+          className="card-container"
+          style={{
+            opacity: clicked ? "0" : "1",
+            transition: "all 0.3s ease-in-out" 
+          }}
+        >
+          {cards()}
         </div>
       </div>
     </>

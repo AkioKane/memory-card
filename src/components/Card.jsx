@@ -12,7 +12,7 @@ function randomID(maxValue) {
   return number;
 }
 
-function Card({ dataCharacters, setDataCharacters, setRandCharacter, character=null }) {
+function Card({ dataCharacters, setDataCharacters, score, setScore, setRandCharacter, setClicked, character=null }) {
   const [dataCard, setDataCard] = useState(null);
 
   async function connectCharacter() {
@@ -22,6 +22,7 @@ function Card({ dataCharacters, setDataCharacters, setRandCharacter, character=n
     const data = await response.json();
   
     data.clicked = false;
+    data.selected = false;
   
     if (data.images.length === 0) {
       return connectCharacter();
@@ -65,12 +66,24 @@ function Card({ dataCharacters, setDataCharacters, setRandCharacter, character=n
       <div 
         className="card"
         onClick={(e) => {
-          setRandCharacter(true)
-          setDataCard(character)
-          if (dataCard.clicked === true) {
-            return console.log("Lose")
+          if (character.clicked === true) {
+            // component Lose
+            return console.log("Lose!")
           }
-          dataCard.clicked = true;
+
+          character.clicked = true;
+          character.selected = true;
+          
+          setScore(((score) => score + 1));
+          setRandCharacter(true);
+          setDataCard(character);
+
+          // console.log(dataCharacters);
+
+          setClicked(true);
+          setTimeout(() => {
+            setClicked(false)
+          }, 500);
         }}
       >
         <img
