@@ -1,0 +1,25 @@
+.dialoge-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  height: 300px;
+  align-items: center;
+  justify-content: center;
+  background: url("../assets/back-start-menu.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 5px;
+  opacity: 0.8;
+}
+
+.dialoge-window p {
+  font-size: 1.1rem;
+  margin-bottom: 1em;
+}
+
+.dialoge-window img {
+  height: 64px;
+  margin: 0.5em;
+}

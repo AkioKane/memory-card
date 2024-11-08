@@ -14,18 +14,28 @@ function shuffleCards(array) {
   return array;
 }
 
-function Game() {
-  const [dataCharacters, setDataCharacters] = useState([])
-  const [callDown, setCallDown] = useState(false)
-  const [randCharacter, setRandCharacter] = useState(false)
-  const [clicked, setClicked] = useState(false)
-  const [score, setScore] = useState(0)
-  const [highScore, setHighScore] = useState(0)
+function Game({ 
+  setStartMenu, 
+  animation, 
+  setAnimation, 
+  setRestart,
+  highScore,
+  setHighScore,
+  onLose,
+  setOnLose,
+  onWin,
+  setOnWin
+}) {
+  const [dataCharacters, setDataCharacters] = useState([]);
+  const [callDown, setCallDown] = useState(false);
+  const [randCharacter, setRandCharacter] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setCallDown(true)
-    }, 500)
+    }, 700)
 
     return () => {
       clearTimeout(timer)
@@ -38,8 +48,7 @@ function Game() {
     }
 
     if (score === 24) {
-      // component Win!
-      console.log("Win!")
+      setOnWin(true)
     }
   }, [score])
 
@@ -49,6 +58,18 @@ function Game() {
       setRandCharacter(false)
     }
   }, [randCharacter])
+
+  useEffect(() => {
+    if (onWin) {
+      console.log("Win!")
+    } else if (onLose) {
+      console.log("Lose!")
+    }
+  })
+
+  useEffect(() => {
+    setRestart(false)
+  }, [])
 
   const getBalancedItems = () => {
     const clickedItems = dataCharacters.filter(item => item.clicked);
@@ -75,8 +96,10 @@ function Game() {
         setRandCharacter={setRandCharacter}
         character={dataCharacters[index]}
         setClicked={setClicked}
-        score={score}
         setScore={setScore}
+        setOnLose={setOnLose}
+        onWin={onWin}
+        onLose={onLose}
         setDataCharacters={setDataCharacters}
       />
     ))
@@ -89,7 +112,10 @@ function Game() {
       <div className="game" style={{
         display: callDown ? "flex" : "none"
       }}>
-        <div className="stats">
+
+        <div 
+          className="stats"
+        >
           <h1>
             <img src={sasuke} alt="ninja1" />
             Memory Card

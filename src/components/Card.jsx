@@ -12,7 +12,17 @@ function randomID(maxValue) {
   return number;
 }
 
-function Card({ dataCharacters, setDataCharacters, score, setScore, setRandCharacter, setClicked, character=null }) {
+function Card({ 
+  dataCharacters, 
+  setDataCharacters, 
+  onWin,
+  onLose,
+  setOnLose, 
+  setScore, 
+  setRandCharacter, 
+  setClicked, 
+  character=null 
+}) {
   const [dataCard, setDataCard] = useState(null);
 
   async function connectCharacter() {
@@ -65,10 +75,17 @@ function Card({ dataCharacters, setDataCharacters, score, setScore, setRandChara
     <>
       <div 
         className="card"
+        style={{
+          transform: (onWin || onLose) ? "none" : "inherit"
+        }}
         onClick={(e) => {
           if (character.clicked === true) {
-            // component Lose
-            return console.log("Lose!")
+            setOnLose(true)
+            setClicked(true);
+            setTimeout(() => {
+              setClicked(false)
+            }, 500);
+            return;
           }
 
           character.clicked = true;

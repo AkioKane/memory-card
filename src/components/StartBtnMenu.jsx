@@ -73,7 +73,12 @@ function StartBtnMenu({ setStartMenu, animation, setAnimation }) {
   }
 
   return (
-    <div className="start-menu-btn">
+    <div 
+      className="start-menu-btn"
+      style={{
+        display: animation ? "none" : "flex"
+      }}
+    >
       <div 
         className="opacity-flow"
         style={{

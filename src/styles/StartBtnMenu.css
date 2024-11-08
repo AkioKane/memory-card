@@ -41,7 +41,18 @@
   width: 80%;
 }
 
-.btn-menu .start-btn {
+.dialoge-window h1 {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  margin-top: 0.5em;
+  width: 80%;
+}
+
+.btn-menu .start-btn,
+.dialoge-window .start-btn {
   display: flex;
   width: 80%;
   height: 40px;
@@ -56,13 +67,14 @@
   gap: 5px;
 }
 
-.btn-menu .start-btn a {
+.btn-menu .start-btn a,
+.dialoge-window .start-btn a {
   color: black;
   text-decoration: none;
 }
 
-.btn-menu .start-btn span,
-.btn-menu .start-btn a {
+.start-btn span,
+.start-btn a {
   margin-left: 20px;
 }
 

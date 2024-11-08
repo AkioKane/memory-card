@@ -9,10 +9,11 @@
   border-radius: 10px;
   border: 5px solid #0c4a6e;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .card:hover {
-  scale: 1.15;
+  transform:  scale(1.15);
 }
 
 .card:active {
