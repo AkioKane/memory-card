@@ -1,8 +1,22 @@
-# React + Vite
+# Memory Card
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Summary
 
-Currently, two official plugins are available:
+This is a Naruto Anime style game, card data is taken from the API. Test your memory, the maximum game score is 24. If you have reached this score, congratulations on your memory!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies
+
+- [NarutoDB](https://narutodb.xyz/)
+- [Vite](https://vite.dev/)
+- [React](https://react.dev/)
+
+## Getting Started
+
+### Installing and running
+
+```bash
+git clone git@github.com:AkioKane/memory-card.git
+cd memory-card
+npm install
+npm run dev
+```
